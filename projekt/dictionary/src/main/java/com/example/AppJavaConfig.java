@@ -1,14 +1,18 @@
 package com.example;
 
+import com.example.dictionary.Controller;
 import com.example.dictionary.audit.AuditConfiguration;
 import com.example.dictionary.translation.TranslationConfiguration;
 import com.example.dictionary.translation.TranslationService;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.support.AbstractApplicationContext;
-
-import com.example.dictionary.Controller;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+
+import javax.validation.Validator;
 
 public class AppJavaConfig {
 
@@ -30,6 +34,11 @@ public class AppJavaConfig {
 		@Bean
 		public Controller controller(TranslationService service) {
 			return new Controller(service);
+		}
+
+		@Bean
+		public Validator validator() {
+			return new LocalValidatorFactoryBean();
 		}
 
 	}
