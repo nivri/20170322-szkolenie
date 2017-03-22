@@ -3,7 +3,9 @@ package com.example.dictionary.translation;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.env.MockPropertySource;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
@@ -13,8 +15,10 @@ import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = TranslationService.class)
-public class TranslationServiceIT {
+@ContextConfiguration(classes = TranslationConfiguration.class)
+public class TranslationServiceSpringTest {
+
+    final static String URL = "http://www.dict.pl/dict?word={}&words=&lang=PL";
 
     @Autowired
     TranslationService service;

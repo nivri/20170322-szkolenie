@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Controller {
 
-	private final TranslationService service;
+    final private TranslationService service;
 
 	public Controller(TranslationService service) {
 		this.service = service;

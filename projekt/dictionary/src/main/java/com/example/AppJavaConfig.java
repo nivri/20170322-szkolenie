@@ -1,11 +1,12 @@
 package com.example;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import com.example.dictionary.translation.TranslationConfiguration;
+import com.example.dictionary.translation.TranslationService;
+import org.springframework.context.annotation.*;
 import org.springframework.context.support.AbstractApplicationContext;
 
 import com.example.dictionary.Controller;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 public class AppJavaConfig {
 
@@ -20,8 +21,13 @@ public class AppJavaConfig {
 	}
 
 	@Configuration
-	@ComponentScan({"com.example.dictionary", "com.example.helloworld"})
+	@Import(TranslationConfiguration.class)
 	public static class AppConfiguration {
+
+		@Bean
+		public Controller controller(TranslationService service) {
+			return new Controller(service);
+		}
 
 	}
 

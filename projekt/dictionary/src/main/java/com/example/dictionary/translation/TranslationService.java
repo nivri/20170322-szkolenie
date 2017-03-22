@@ -1,6 +1,7 @@
 package com.example.dictionary.translation;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -23,9 +24,10 @@ public class TranslationService {
     private static Pattern pat = Pattern
             .compile(".*<a href=\"dict\\?words?=(.*)&lang.*");
 
-    private String urlStringTemplate = "http://www.dict.pl/dict?word={}&words=&lang=PL";
+    final private String urlStringTemplate;
 
-    public TranslationService() {
+    public TranslationService(@Value("${dict.url}") String urlStringTemplate) {
+        this.urlStringTemplate = urlStringTemplate;
     }
 
     public List<DictionaryWord> getTranslationsForWord(String wordToTranslate) {
