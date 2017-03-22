@@ -1,6 +1,7 @@
 package com.example.dictionary.translation;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+@Component
 public class TranslationService {
     private static Logger log = Logger.getLogger(TranslationService.class);
     private static Pattern pat = Pattern
