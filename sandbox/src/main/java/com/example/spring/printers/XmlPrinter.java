@@ -1,9 +1,10 @@
 package com.example.spring.printers;
 
 import com.example.spring.HelloWorld;
-import org.springframework.stereotype.Component;
 
-@Component
+import javax.inject.Named;
+
+@Named
 @XmlFormat
 class XmlPrinter implements Printer {
 

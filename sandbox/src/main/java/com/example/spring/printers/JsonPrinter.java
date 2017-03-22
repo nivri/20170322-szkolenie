@@ -1,10 +1,10 @@
 package com.example.spring.printers;
 
 import com.example.spring.HelloWorld;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 
-@Component
+import javax.inject.Named;
+
+@Named
 @JsonFormat
 public class JsonPrinter implements Printer {
 
