@@ -1,8 +1,12 @@
 package com.example.dictionary.translation;
 
+import com.example.dictionary.TranslationEvent;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -28,6 +32,9 @@ public class TranslationService {
 
     final private String urlStringTemplate;
 
+    @Autowired
+    ApplicationEventPublisher publisher;
+
     public TranslationService(@Value("${dict.url}") String urlStringTemplate) {
         this.urlStringTemplate = urlStringTemplate;
     }
@@ -35,9 +42,13 @@ public class TranslationService {
     public List<DictionaryWord> getTranslationsForWord(String wordToTranslate) {
         List<String> words = getWords(wordToTranslate);
 
-        return streamOfPairs(words)
+        List<DictionaryWord> collect = streamOfPairs(words)
                 .map(e -> new DictionaryWord(e.getKey(), e.getValue()))
                 .collect(Collectors.toList());
+
+        publisher.publishEvent(new TranslationEvent("translation.size() = " + collect.size()));
+
+        return collect;
     }
 
     private List<String> getWords(String wordToFind) {
