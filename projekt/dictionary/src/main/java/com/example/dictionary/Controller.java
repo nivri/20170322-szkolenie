@@ -1,5 +1,6 @@
 package com.example.dictionary;
 
+import com.example.dictionary.repository.Repository;
 import com.example.dictionary.translation.DictionaryWord;
 import com.example.dictionary.translation.TranslationService;
 import org.springframework.beans.factory.BeanFactory;
@@ -8,9 +9,7 @@ import org.springframework.stereotype.Component;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 @Component
 public class Controller {
@@ -22,14 +21,18 @@ public class Controller {
 	BeanFactory bf;
 
     final private TranslationService service;
+    final private Repository repository;
 
-	public Controller(TranslationService service) {
+	public Controller(TranslationService service, Repository repository) {
 		this.service = service;
+		this.repository = repository;
 	}
 
 	public void run() {
 		boolean ok = true;
 		Scanner s = new Scanner(System.in);
+
+		final List<DictionaryWord> wordList = new ArrayList();
 		while (ok) {
 			System.out.print("dictionary > ");
 			Params p = bf.getBean(Params.class, s.nextLine());
@@ -41,9 +44,19 @@ public class Controller {
                     continue;
                 }
 
-                List<DictionaryWord> wordList = service.getTranslationsForWord(p.getAttrs().get(0));
-                wordList.forEach(System.out::println);
+                wordList.clear();
+                wordList.addAll(service.getTranslationsForWord(p.getAttrs().get(0)));
+                wordList.forEach(d -> System.out.println(wordList.indexOf(d) + ":: " + d));
             }
+
+            if ("save".equals(p.getCommand())) {
+				Integer index = Integer.valueOf(p.getAttrs().get(0));
+				repository.addWord(wordList.get(index));
+			}
+
+			if ("print".equals(p.getCommand())) {
+				repository.printSavedWords();
+			}
 
 			if ("exit".equals(p.getCommand())) {
 				ok = false;
