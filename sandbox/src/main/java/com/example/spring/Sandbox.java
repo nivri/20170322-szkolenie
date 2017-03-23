@@ -2,6 +2,8 @@ package com.example.spring;
 
 import com.example.spring.db.DictionaryWord;
 import com.example.spring.db.WordsQuery;
+import com.example.spring.db.dbi.WordsDao;
+import org.skife.jdbi.v2.DBI;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.ResourceBundleMessageSource;
@@ -23,9 +25,15 @@ public class Sandbox {
         Controller bean = ctx.getBean(Controller.class);
         bean.doRun();
 
+        WordsDao dao = ctx.getBean(WordsDao.class);
+        List<DictionaryWord> dictionaryWords = dao.listWords();
+        System.out.println("dictionaryWords = " + dictionaryWords);
+
+
         WordsQuery wordsQuery = ctx.getBean(WordsQuery.class);
         List<DictionaryWord> execute = wordsQuery.execute();
         System.out.println("execute = " + execute);
+
 
 //        DataSource dataSource = ctx.getBean(DataSource.class);
 //
@@ -73,6 +81,13 @@ public class Sandbox {
             ds.setPassword("");
 
             return ds;
+        }
+
+        @Bean(destroyMethod = "close")
+        public WordsDao dbiDao(DataSource ds) {
+            // http://jdbi.org/
+            DBI dbi = new DBI(ds);
+            return dbi.open(WordsDao.class);
         }
 
     }
