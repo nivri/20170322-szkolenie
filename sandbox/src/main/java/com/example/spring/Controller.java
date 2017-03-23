@@ -1,5 +1,6 @@
 package com.example.spring;
 
+import com.example.spring.printers.JsonFormat;
 import com.example.spring.printers.Printer;
 import com.example.spring.printers.XmlFormat;
 import org.springframework.stereotype.Component;
@@ -13,8 +14,8 @@ public class Controller {
         this.printer = printer;
     }
 
-    public void run() {
-        System.out.println(printer.sayHello());
+    public void doRun() {
+        System.out.println("Printed: " + printer.sayHello());
     }
 
 }

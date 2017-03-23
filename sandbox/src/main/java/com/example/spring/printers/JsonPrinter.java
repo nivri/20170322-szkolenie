@@ -18,4 +18,5 @@ public class JsonPrinter implements Printer {
     public String sayHello() {
         return "{\"hello\": \"" + hello.sayHello() + "\"}";
     }
+
 }
