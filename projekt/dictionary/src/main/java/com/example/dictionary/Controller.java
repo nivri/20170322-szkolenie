@@ -33,7 +33,7 @@ public class Controller {
 			Params p = Params.ofString(s.nextLine());
 
 			if ("search".equals(p.getCommand())) {
-                Set<ConstraintViolation<Params>> errors = validator.validate(p, SearchValidationGroup.class);
+                Set<ConstraintViolation<Params>> errors = validator.validate(p, p.validationGroup());
                 if (!errors.isEmpty()) {
                     System.out.println("validate = " + errors);
                     continue;

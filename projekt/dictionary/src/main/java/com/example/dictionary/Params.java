@@ -1,12 +1,18 @@
 package com.example.dictionary;
 
 import com.example.dictionary.validation.SearchValidationGroup;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Arrays;
 import java.util.List;
 
+@Component
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class Params {
 
     @NotNull
@@ -41,5 +47,21 @@ public class Params {
 
     public List<String> getAttrs() {
         return attrs;
+    }
+
+    @Override
+    public String toString() {
+        return "Params{" +
+                "command='" + command + '\'' +
+                ", attrs=" + attrs +
+                '}';
+    }
+
+    public Class<?> validationGroup() {
+        if ("search".equals(getCommand())) {
+            return SearchValidationGroup.class;
+        }
+
+        return javax.validation.groups.Default.class;
     }
 }
