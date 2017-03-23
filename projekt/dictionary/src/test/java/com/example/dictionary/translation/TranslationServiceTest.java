@@ -17,11 +17,6 @@ public class TranslationServiceTest {
 
     TranslationService service = new TranslationService(ROOT_FOLDER + "/{}.html");
 
-    @Before
-    public void setup() {
-        service.publisher = Mockito.mock(ApplicationEventPublisher.class);
-    }
-
     @Test
     public void should_return_translations_for_word_book() {
         List<DictionaryWord> books = service.getTranslationsForWord("book");

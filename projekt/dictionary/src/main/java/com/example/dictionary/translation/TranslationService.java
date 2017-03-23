@@ -32,8 +32,8 @@ public class TranslationService {
 
     final private String urlStringTemplate;
 
-    @Autowired
-    ApplicationEventPublisher publisher;
+//    @Autowired
+//    ApplicationEventPublisher publisher;
 
     public TranslationService(@Value("${dict.url}") String urlStringTemplate) {
         this.urlStringTemplate = urlStringTemplate;
@@ -46,7 +46,7 @@ public class TranslationService {
                 .map(e -> new DictionaryWord(e.getKey(), e.getValue()))
                 .collect(Collectors.toList());
 
-        publisher.publishEvent(new TranslationEvent("translation.size() = " + collect.size()));
+//        publisher.publishEvent(new TranslationEvent("translation.size() = " + collect.size()));
 
         return collect;
     }
