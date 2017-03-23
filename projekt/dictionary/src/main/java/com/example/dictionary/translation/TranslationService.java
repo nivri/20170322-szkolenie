@@ -32,9 +32,6 @@ public class TranslationService {
 
     final private String urlStringTemplate;
 
-//    @Autowired
-//    ApplicationEventPublisher publisher;
-
     public TranslationService(@Value("${dict.url}") String urlStringTemplate) {
         this.urlStringTemplate = urlStringTemplate;
     }
@@ -42,13 +39,9 @@ public class TranslationService {
     public List<DictionaryWord> getTranslationsForWord(String wordToTranslate) {
         List<String> words = getWords(wordToTranslate);
 
-        List<DictionaryWord> collect = streamOfPairs(words)
+        return streamOfPairs(words)
                 .map(e -> new DictionaryWord(e.getKey(), e.getValue()))
                 .collect(Collectors.toList());
-
-//        publisher.publishEvent(new TranslationEvent("translation.size() = " + collect.size()));
-
-        return collect;
     }
 
     private List<String> getWords(String wordToFind) {
