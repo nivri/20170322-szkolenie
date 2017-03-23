@@ -1,17 +1,14 @@
 package com.example;
 
 import com.example.dictionary.Controller;
+import com.example.dictionary.GenericParams;
 import com.example.dictionary.Params;
-import com.example.dictionary.ParamsAspect;
 import com.example.dictionary.audit.AuditConfiguration;
 import com.example.dictionary.translation.TranslationConfiguration;
-import com.example.dictionary.translation.TranslationService;
-import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.stereotype.Component;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import javax.validation.Validator;
@@ -39,7 +36,7 @@ public class App {
 		@Bean
 		@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 		public Params paramsFactory(String line) {
-			return Params.ofString(line);
+			return GenericParams.ofString(line);
 		}
 
 		@Bean
