@@ -11,8 +11,6 @@ import javax.validation.constraints.Size;
 import java.util.Arrays;
 import java.util.List;
 
-@Component
-@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class Params {
 
     @NotNull
@@ -31,6 +29,8 @@ public class Params {
             return new Params(split.get(0), split.subList(1, split.size()));
         }
     }
+
+    public Params() {}
 
     private Params(String command) {
         this.command = command;

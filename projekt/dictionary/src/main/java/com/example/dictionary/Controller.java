@@ -1,23 +1,25 @@
 package com.example.dictionary;
 
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
-
 import com.example.dictionary.translation.DictionaryWord;
 import com.example.dictionary.translation.TranslationService;
-import com.example.dictionary.validation.SearchValidationGroup;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Set;
 
 @Component
 public class Controller {
 
     @Autowired
     Validator validator;
+
+    @Autowired
+	BeanFactory bf;
 
     final private TranslationService service;
 
@@ -30,7 +32,7 @@ public class Controller {
 		Scanner s = new Scanner(System.in);
 		while (ok) {
 			System.out.print("dictionary > ");
-			Params p = Params.ofString(s.nextLine());
+			Params p = bf.getBean(Params.class, s.nextLine());
 
 			if ("search".equals(p.getCommand())) {
                 Set<ConstraintViolation<Params>> errors = validator.validate(p, p.validationGroup());
