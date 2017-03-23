@@ -32,6 +32,7 @@ public class App {
 	@Configuration
 	@EnableAsync
 	@EnableAspectJAutoProxy
+	@ComponentScan("com.example.dictionary")
 	@Import({TranslationConfiguration.class, AuditConfiguration.class})
 	public static class AppConfiguration {
 
@@ -39,16 +40,6 @@ public class App {
 		@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 		public Params paramsFactory(String line) {
 			return Params.ofString(line);
-		}
-
-		@Bean
-		public ParamsAspect aspect() {
-			return new ParamsAspect();
-		}
-
-		@Bean
-		public Controller controller(TranslationService service) {
-			return new Controller(service);
 		}
 
 		@Bean
