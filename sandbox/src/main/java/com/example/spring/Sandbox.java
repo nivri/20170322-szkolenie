@@ -8,6 +8,9 @@ import org.springframework.context.annotation.*;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import javax.sql.DataSource;
@@ -17,7 +20,10 @@ public class Sandbox {
 
     public static void main(String[] args) throws Exception {
 
-        GenericApplicationContext ctx = new AnnotationConfigApplicationContext(Cfg.class);
+        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
+        ctx.register(Cfg.class);
+//        ctx.getEnvironment().setActiveProfiles("test");
+        ctx.refresh();
 
 //        Map<String, Object> ofType = ctx.getBeansOfType(Object.class);
 //        ofType.forEach((s,o) -> System.out.println(s + " :: " + o));
@@ -68,12 +74,18 @@ public class Sandbox {
         }
 
         @Bean
-        public DataSource ds() {
-//            EmbeddedDatabase ds = new EmbeddedDatabaseBuilder()
-//                    .setType(EmbeddedDatabaseType.HSQL)
-//                    .build();
-//
-//            return ds;
+        @Profile("test")
+        public DataSource testDatasource() {
+            EmbeddedDatabase ds = new EmbeddedDatabaseBuilder()
+//                    .addScript()
+                    .setType(EmbeddedDatabaseType.HSQL)
+                    .build();
+            return ds;
+        }
+
+        @Bean
+        @Profile("!test")
+        public DataSource productionDatasource() {
             DriverManagerDataSource ds = new DriverManagerDataSource();
             ds.setDriverClassName(org.hsqldb.jdbc.JDBCDriver.class.getName());
             ds.setUrl("jdbc:hsqldb:file:/tmp/sandboxdb/");
