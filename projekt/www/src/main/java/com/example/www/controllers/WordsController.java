@@ -8,9 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.async.DeferredResult;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
+import static java.util.concurrent.CompletableFuture.supplyAsync;
 
 @RestController
 public class WordsController {
@@ -44,8 +48,30 @@ public class WordsController {
     }
 
     @GetMapping("/")
-    public List<DictionaryWord> savedWords() {
-        return repository.getSavedWords();
+    public CompletableFuture<List<DictionaryWord>> savedWords() {
+//        DeferredResult<List<DictionaryWord>> result = new DeferredResult<>();
+
+        System.out.println("Pre-System.currentTimeMillis() = " + System.currentTimeMillis());
+
+        return supplyAsync(() -> {
+                    try {
+                        Thread.sleep(5000);
+                    } catch (Exception e) {}
+                    return repository.getSavedWords();
+                });
+    }
+
+//    @GetMapping("/")
+    public List<DictionaryWord> savedWordsSync() {
+
+        System.out.println("Pre-System.currentTimeMillis() = " + System.currentTimeMillis());
+
+        CompletableFuture<List<DictionaryWord>> future =
+                supplyAsync(() -> repository.getSavedWords());
+
+        System.out.println("Post-System.currentTimeMillis() = " + System.currentTimeMillis());
+
+        return future.join();
     }
 
 
