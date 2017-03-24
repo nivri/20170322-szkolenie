@@ -6,14 +6,30 @@
 
     <groupId>com.example.servlet</groupId>
     <artifactId>www</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
+
+    <parent>
+        <groupId>com.example</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../parent</relativePath>
+    </parent>
 
     <properties>
         <failOnMissingWebXml>false</failOnMissingWebXml>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.example.spring</groupId>
+            <artifactId>dictionary</artifactId>
+        </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>

@@ -9,24 +9,17 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
+	<parent>
+		<groupId>com.example</groupId>
+		<artifactId>parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../../parent</relativePath>
+	</parent>
+
 	<properties>
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
 		<slf4j.version>1.7.22</slf4j.version>
 	</properties>
-
-	<dependencyManagement>
-	    <dependencies>
-	        <dependency>
-	            <groupId>io.spring.platform</groupId>
-	            <artifactId>platform-bom</artifactId>
-				<version>Athens-SR2</version>
-	            <type>pom</type>
-	            <scope>import</scope>
-	        </dependency>
-	    </dependencies>
-	</dependencyManagement>
 
 	<dependencies>
 		<dependency>
