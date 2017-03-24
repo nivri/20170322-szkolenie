@@ -3,7 +3,10 @@ package com.example.www;
 import com.example.App;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.context.support.AbstractRefreshableWebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.context.support.GenericWebApplicationContext;
+import org.springframework.web.servlet.DispatcherServlet;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -18,8 +21,18 @@ public class WebInitializer implements WebApplicationInitializer {
 
         servletContext.addListener(new ContextLoaderListener(ctx));
 
+
+        AnnotationConfigWebApplicationContext webCtx = new AnnotationConfigWebApplicationContext();
+        webCtx.register(SpringWebMvcConfiguration.class);
+
         ServletRegistration.Dynamic dispatcher =
-                servletContext.addServlet("myRequestHandler", new MyServlet());
+                servletContext.addServlet("dispatcher",
+                        new DispatcherServlet(webCtx));
+        dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
+
+        ServletRegistration.Dynamic mySerlvet =
+                servletContext.addServlet("myRequestHandler", new MyServlet());
+        mySerlvet.addMapping("/servlet");
     }
 }

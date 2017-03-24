@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-@WebServlet(urlPatterns = "/*")
 public class MyServlet extends HttpServlet {
 
     WebApplicationContext context;
