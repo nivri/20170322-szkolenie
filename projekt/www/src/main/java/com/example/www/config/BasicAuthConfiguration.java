@@ -1,4 +1,4 @@
-package com.example.www;
+package com.example.www.config;
 
 import org.keycloak.adapters.springsecurity.KeycloakSecurityComponents;
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
