@@ -15,7 +15,7 @@
     </properties>
 
     <modules>
-        <module>../projekt/dictionary</module>
+        <module>../dictionary</module>
         <module>../www</module>
     </modules>
 
