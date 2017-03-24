@@ -32,11 +32,13 @@ public class WebInitializer implements WebApplicationInitializer {
                 servletContext.addFilter("springSecurityFilterChain", new DelegatingFilterProxy());
         springSecurityFilterChain.addMappingForUrlPatterns(null, false, "/*");
 
+
         ServletRegistration.Dynamic dispatcher =
                 servletContext.addServlet("dispatcher",
                         new DispatcherServlet(webCtx));
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
+
 
         ServletRegistration.Dynamic mySerlvet =
                 servletContext.addServlet("myRequestHandler", new MyServlet());

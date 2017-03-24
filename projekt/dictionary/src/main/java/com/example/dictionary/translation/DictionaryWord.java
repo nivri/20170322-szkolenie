@@ -9,6 +9,14 @@ public class DictionaryWord {
         this.englishWord = englishWord;
     }
 
+    public String getPolishWord() {
+        return polishWord;
+    }
+
+    public String getEnglishWord() {
+        return englishWord;
+    }
+
     @Override
     public String toString() {
         return "DictionaryWord{" +

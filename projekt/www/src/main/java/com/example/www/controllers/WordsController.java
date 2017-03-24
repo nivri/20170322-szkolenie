@@ -23,14 +23,15 @@ public class WordsController {
         this.repository = repository;
     }
 
-    @GetMapping(path = "/search/{word}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @GetMapping(path = "/search/{word}", headers = "X-Version=1",
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public List<DictionaryWord> searchForWord(@PathVariable("word") String word) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         authentication.getAuthorities().forEach(System.out::println);
         return service.getTranslationsForWord(word);
     }
 
-    @PostMapping("/search/{word}")
+    @PostMapping(value = "/search/{word}")
     public ResponseEntity save(@PathVariable("word") String word, @RequestParam("save") Integer i) {
         List<DictionaryWord> words = service.getTranslationsForWord(word);
         if (words.size() < i) {
